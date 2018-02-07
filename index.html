@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Banner</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+	
+	    <script>
+        document.addEventListener('DOMContentLoaded', function(){ 
+          
+            var all_links = document.querySelectorAll("a");
+
+            for(var i=0; i<all_links.length; i++){
+                currentHref = all_links[i].getAttribute("href");
+                if(currentHref && (currentHref.indexOf("hosting.india.to") > -1 || currentHref.indexOf("hosting.India.to") > -1)) {
+                    all_links[i].parentNode.removeChild(all_links[i]);
+                }
+            }
+
+        }, false);
+
+ 
+ 
+		function continueInApp(event) {
+			var type = '';
+			var agentType = '';	
+
+			//Check for iOS
+			if (navigator.userAgent.match(/iPad|iPhone|iPod/i) != null) {        	
+				type = 'ios';  
+
+				//Safari
+				if (navigator.userAgent.match(/^((?!chrome|android|crios|fxios).)*safari/i) != null) {
+					agentType = 'safari';
+					
+				}
+				//Chrome
+				else if (navigator.userAgent.match(/CriOS/i) != null) {
+					agentType = 'chrome';
+				}	  
+				//Other browsers
+				else {
+					agentType = 'other';
+				}
+			} 
+			//Android
+			else if (navigator.userAgent.match(/Android/i) != null) {
+				type = 'android';
+				//Chrome
+				if (navigator.userAgent.match(/Chrome/i) != null) {
+					agentType = 'chrome';
+				}
+				//Other browsers
+				else {
+					agentType = 'other';
+				}  
+			}
+			
+			//Get App url based on device
+			function getapplink () {
+				var appurls = {};
+				
+				//App url is same for both device
+				appurls.appurl = 'souq://';
+				
+				//Android
+				if(type=='android'){					
+					appurls.storeurl = "market://details?id=com.souq.app";
+					//Play store
+				}else if(type=='ios'){
+					appurls.storeurl = 'https://itunes.apple.com/us/app/id675000850';
+					//Safari - add logic to use default meta tag implementation
+					if(agentType=='safari'){
+						appurls.appurl = "N";
+						//TODO add logic to use default meta tag implementation
+					}
+				}			
+				
+				return appurls;
+			}
+	  
+			//Get the url object
+    	  	var applink = getapplink();
+
+            //Timeout logic to open app
+            setTimeout(function () { window.location = applink['storeurl'];}, 200);
+            window.location = applink['appurl'];			
+
+			
+		}
+      </script>	
+
+	
+	Click here now to <a style="color:green" href="javascript:continueInApp(event)" >CONTINUE IN APP</a>  
+	</br></br></br></br>
+		
+</body>
+</html>
